@@ -1,0 +1,45 @@
+<script type="text/javascript" charset="utf-8" async defer>
+	
+// POST request example
+var ajax = new XMLHttpRequest();
+
+
+//Params
+var email = "example@hotmail.com"; //Your customer's email address that will be used to log in the JivoChat app
+var siteUrl = "www.example.com"; //The address of your client’s site. They could change it in the future. If a site with the same name already exists in the client’s account, you will receive a widget ID for this site, otherwise, a new one will be created.
+var userDisplayName = "Jhon Exemple Name"; //Customer’s real name to be displayed in chat. He will be able to change it in the future.
+var userPassword = "PasswordExample123"; //Your customer's password for JivoChat, will be used to log in to JivoChat agent app. Must contain at least 6 characters, at least one number and a capital letter
+var partnerId = "YOUR_PARTNER_ID"; //We generate it for you
+var partnerSecret = "YOUR_PARTNER_SECRET"; //We generate it for you
+var authToken = "as15asd62sa6d5as2dad"; //Here you can generate your token using the method you prefer
+var lang = "en";
+
+// Set request type: Post and API URL
+ajax.open("POST", "https://api.jivosite.com/web/integration/install", true);
+ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+// Set request parameters and send the request
+ajax.send("email=" + email +
+ 	"&siteUrl=" + siteUrl +
+  "&userDisplayName=" + userDisplayName +
+  "&userPassword=" + userPassword +
+  "&partnerId=" + partnerId +
+  "&partnerSecret=" + partnerSecret +
+  "&authToken=" + authToken +
+  "&lang=" + lang);
+
+// Create an event to receive the return.
+ajax.onreadystatechange = function() {
+
+  // If the state is 4 and the http.status is 200, it is because the request was successful.
+  if (ajax.readyState == 4 && ajax.status == 200) {
+
+  	var data = ajax.responseText;
+
+    // Return
+    console.log(data);
+  }
+}
+
+</script>
+
