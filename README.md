@@ -1,2 +1,90 @@
 # jivochat
 PHP - Jivochat API Usage example:
+
+Documentation
+
+You could use this API to configure the integration of your service and JivoChat.
+
+There are 2 methods available to you: install and login. Both methods accept an array of parameters in the format application/x-www-form-urlencoded.
+
+install - Create a new JivoChat account
+This method will allow you to quickly connect your customers to JivoChat directly from your service.
+
+POST https://api.jivosite.com/web/integration/install
+
+Request parameters:
+Parameter*
+Description
+partnerId	
+Partner ID
+
+partnerSecret	
+Secret password issued to the partner
+
+siteUrl	
+The address of your client’s site. They could change it in the future. If a site with the same name already exists in the client’s account, you will receive a widget ID for this site, otherwise, a new one will be created.
+
+email	
+Your customer's email address that will be used to log in the JivoChat app
+
+userPassword	
+Your customer's password for JivoChat, will be used to log in to JivoChat agent app. Must contain at least 6 characters, at least one number and a capital letter
+
+userDisplayName	
+Customer’s real name to be displayed in chat. He will be able to change it in the future.
+
+authToken	
+You need to generate a random temporary access token (preferably a GUID). After generation, you need to save it to automatically log in to your JivoChat using the login method. This token will be valid for 10 days. After your client logs into the JivoChat application, all subsequent logins will occur automatically without the participation of this token.
+
+lang	
+Customer's language (ru, en, pt, es, tr)
+
+webhook	
+This parameter is optional. You can specify the URL to which we will send webhooks about your customer's dialogs and calls events. You can read more about webhooks here  JivoChat Developers API
+
+* All parameters used are of type "string"
+
+Response:
+If everything is correct, the response is returned 200 OK, the line is returned in the response body - the widget identifier widget_id, which must be specified in the <script> tag, which must be added to the page before the closing tag </head>:
+
+<script src='//code.jivosite.com/widget/xxxxxx' async></script>
+
+An email with the login, password, and instructions for how to use JivoChat is sent to the requested email address.
+
+If an error occurs, the response is returned ALSO 200 OK, but the response body contains information about the error.
+
+Usage example:
+curl -i https://api.jivosite.com/web/integration/install \
+  -X POST \
+  -d partnerId=YOUR-PARTNER-ID \
+  -d partnerSecret=YOUR-PARTNER-PASSWORD \
+  -d siteUrl=example.com \
+  -d email=client-email@example.com \
+  -d userPassword=veryStrongPassword1 \
+  -d userDisplayName='Name for chat' \
+  -d authToken=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
+  -d lang=en
+IMPORTANT! After successfully creating an account, please don't forget to share the link to download the agent's application with your customer.: jivochat.com/apps 
+
+login - Automatically authorize your customer at JivoChat
+This method is being used to redirect the client to the JivoChat app.
+Thus, you should direct the client browser to this URL with a POST request, after which the client will be automatically redirected and authorized in the JivoChat application.
+
+POST https://api.jivosite.com/web/integration/login
+
+Request parameters:
+Parameter*
+Description
+token	
+The used token for the integration/install method (authToken)
+
+partnerId	
+Partner ID
+
+* All parameters used are of type "string"
+
+Usage example:
+curl -i https://api.jivosite.com/web/integration/login \
+  -X POST \
+  -d partnerId=YOUR-PARTNER-ID \
+  -d token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
