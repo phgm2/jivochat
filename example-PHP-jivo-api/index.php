@@ -7,7 +7,7 @@
 	$params['userPassword'] =  'Senha12345';
 	$params['partnerId'] =  'Montink';
 	$params['partnerSecret'] =  'b_96XnsT!R';
-	$params['authToken'] =  substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 30); //Aqui vc pode gerar seu token como quiser;
+	$params['authToken'] =  substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 30); //Here you can generate your token however you want
 	$params['lang'] = 'en';
 
 	$url = URL_API_JIVOCHAT."/install?".http_build_query($params);
